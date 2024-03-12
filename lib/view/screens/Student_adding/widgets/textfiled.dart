@@ -8,7 +8,8 @@ class Namefield extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20),
-      child: TextField(
+      child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: namecontroller,
         keyboardType: TextInputType.name,
         decoration: InputDecoration(
@@ -24,6 +25,13 @@ class Namefield extends StatelessWidget {
           ),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Please enter your username";
+          } else {
+            return null;
+          }
+        },
       ),
     );
   }
@@ -38,6 +46,7 @@ class ClassField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: classcontroller,
         decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
@@ -73,6 +82,7 @@ class Agefield extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20, top: 20),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: agecontroller,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(
@@ -108,6 +118,7 @@ class phonefield extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(left: 20, right: 20, top: 20),
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         controller: phonecontroller,
         keyboardType: TextInputType.phone,
         decoration: InputDecoration(

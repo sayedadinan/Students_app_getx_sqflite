@@ -17,8 +17,10 @@ class Addstudent extends StatelessWidget {
   final TextEditingController agecontroller = TextEditingController();
   final TextEditingController phonecontroller = TextEditingController();
   final Studentaddcontrol controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     controller.initialize();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 185, 206, 208),
@@ -43,17 +45,24 @@ class Addstudent extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            Namefield(
-              namecontroller: namecontroller,
-            ),
-            ClassField(
-              classcontroller: classcontroller,
-            ),
-            Agefield(
-              agecontroller: agecontroller,
-            ),
-            phonefield(
-              phonecontroller: phonecontroller,
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  Namefield(
+                    namecontroller: namecontroller,
+                  ),
+                  ClassField(
+                    classcontroller: classcontroller,
+                  ),
+                  Agefield(
+                    agecontroller: agecontroller,
+                  ),
+                  phonefield(
+                    phonecontroller: phonecontroller,
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20,
@@ -61,15 +70,17 @@ class Addstudent extends StatelessWidget {
             SubmitButton(
               titletext: 'Save Student',
               onTap: () async {
-                StudentModel data = StudentModel(
-                    name: namecontroller.text,
-                    age: agecontroller.text,
-                    study: classcontroller.text,
-                    images: addcontroller.imagepath.value.toString(),
-                    phone: phonecontroller.text);
-                await SQLHelper.insertdata(data);
-                print('added');
-                Get.back();
+                if (formKey.currentState!.validate()) {
+                  StudentModel data = StudentModel(
+                      name: namecontroller.text,
+                      age: agecontroller.text,
+                      study: classcontroller.text,
+                      images: addcontroller.imagepath.value.toString(),
+                      phone: phonecontroller.text);
+                  await SQLHelper.insertdata(data);
+                  print('added');
+                  Get.back();
+                }
               },
             )
           ],
